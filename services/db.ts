@@ -3,11 +3,23 @@ import { DB_NAME, STORE_NAME } from '../constants';
 
 export const initDB = (): Promise<IDBDatabase> => {
   return new Promise((resolve, reject) => {
-    const request = indexedDB.open(DB_NAME, 1);
-    request.onupgradeneeded = () => {
+    const request = indexedDB.open(DB_NAME, 2); // Versión 2 para nuevas tablas
+    request.onupgradeneeded = (event: any) => {
       const db = request.result;
+      
+      // Cola de sincronización offline
       if (!db.objectStoreNames.contains(STORE_NAME)) {
         db.createObjectStore(STORE_NAME, { keyPath: 'id' });
+      }
+      
+      // Espejo local de parking_records (Google Sheets)
+      if (!db.objectStoreNames.contains('parking_records')) {
+        db.createObjectStore('parking_records', { keyPath: 'id' });
+      }
+
+      // Registro de auditoría local
+      if (!db.objectStoreNames.contains('audit_log')) {
+        db.createObjectStore('audit_log', { keyPath: 'id' });
       }
     };
     request.onsuccess = () => resolve(request.result);

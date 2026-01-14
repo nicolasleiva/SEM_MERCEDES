@@ -34,6 +34,7 @@ export interface ParkingRecord {
   status: ParkingStatus;
   latitude: number;
   longitude: number;
+  address?: string;
   total_minutes?: number;
   rate_cents: number;
   amount_cents: number;
