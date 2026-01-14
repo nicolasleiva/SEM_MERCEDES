@@ -1,0 +1,7 @@
+{
+  "name": "SEM Mercedes - Municipalidad de Mercedes, Corrientes",
+  "description": "Sistema de Estacionamiento Medido para la Municipalidad de Mercedes, Corrientes. Gestión de patentes, cobros y auditoría en tiempo real.",
+  "requestFramePermissions": [
+    "geolocation"
+  ]
+}
